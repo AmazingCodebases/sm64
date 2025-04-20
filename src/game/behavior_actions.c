@@ -99,8 +99,9 @@ void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size) {
     sMistParticles.sizeBase = size;
     sMistParticles.sizeRange = size / 20.0;
     sMistParticles.offsetY = offsetY;
+    s32 _0 = 0;
 
-    if (count == 0) {
+    if (count == _0) {
         sMistParticles.count = 20;
     } else if (count > 20) {
         sMistParticles.count = count;
