@@ -181,7 +181,7 @@ void load_obj_warp_nodes(void) {
 }
 
 void clear_areas(void) {
-    s32 i;
+    s32 i = 0;
 
     gCurrentArea = NULL;
     gWarpTransition.isActive = FALSE;
@@ -212,7 +212,7 @@ void clear_areas(void) {
 }
 
 void clear_area_graph_nodes(void) {
-    s32 i;
+    s32 i = 0;
 
     if (gCurrentArea != NULL) {
         geo_call_global_function_nodes(&gCurrentArea->unk04->node, GEO_CONTEXT_AREA_UNLOAD);
