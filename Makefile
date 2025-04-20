@@ -38,13 +38,13 @@ $(eval $(call validate-option,VERSION,jp us eu sh cn))
 
 ifeq      ($(VERSION),jp)
   DEFINES   += VERSION_JP=1
-  OPT_FLAGS := -g
+  OPT_FLAGS := -O2
   GRUCODE   ?= f3d_old
   VERSION_JP_US  ?= true
   VERSION_SH_CN  ?= false
 else ifeq ($(VERSION),us)
   DEFINES   += VERSION_US=1
-  OPT_FLAGS := -g
+  OPT_FLAGS := -O2
   GRUCODE   ?= f3d_old
   VERSION_JP_US  ?= true
   VERSION_SH_CN  ?= false
@@ -735,16 +735,16 @@ endif
 
 # Alternate compiler flags needed for matching
 ifeq ($(COMPILER),ido)
-  $(BUILD_DIR)/levels/%/leveldata.o: OPT_FLAGS := -g
-  $(BUILD_DIR)/actors/%.o:           OPT_FLAGS := -g
-  $(BUILD_DIR)/bin/%.o:              OPT_FLAGS := -g
-  $(BUILD_DIR)/src/goddard/%.o:      OPT_FLAGS := -g
+  $(BUILD_DIR)/levels/%/leveldata.o: OPT_FLAGS := -O2
+  $(BUILD_DIR)/actors/%.o:           OPT_FLAGS := -O2
+  $(BUILD_DIR)/bin/%.o:              OPT_FLAGS := -O2
+  $(BUILD_DIR)/src/goddard/%.o:      OPT_FLAGS := -O2
   $(BUILD_DIR)/src/goddard/%.o:      MIPSISET := -mips1
   $(BUILD_DIR)/lib/asm/__osDisableInt.o: MIPSISET := -mips2
   $(BUILD_DIR)/lib/asm/bcopy.o:      MIPSISET := -mips2
-  $(BUILD_DIR)/lib/src/%.o:          OPT_FLAGS :=
+  $(BUILD_DIR)/lib/src/%.o:          OPT_FLAGS := -O2
   $(BUILD_DIR)/lib/src/math/%.o:     OPT_FLAGS := -O2
-  $(BUILD_DIR)/lib/src/math/ll%.o:   OPT_FLAGS :=
+  $(BUILD_DIR)/lib/src/math/ll%.o:   OPT_FLAGS := -O2
   $(BUILD_DIR)/lib/src/math/ll%.o:   MIPSISET := -mips3 -32
   $(BUILD_DIR)/lib/src/ldiv.o:       OPT_FLAGS := -O2
   $(BUILD_DIR)/lib/src/string.o:     OPT_FLAGS := -O2
@@ -755,7 +755,7 @@ ifeq ($(COMPILER),ido)
     $(BUILD_DIR)/lib/src/_Litob.o:   OPT_FLAGS := -O3
     $(BUILD_DIR)/lib/src/_Printf.o:  OPT_FLAGS := -O3
     $(BUILD_DIR)/lib/src/sprintf.o:  OPT_FLAGS := -O3
-    $(BUILD_DIR)/lib/src/osDriveRomInit.o: OPT_FLAGS := -g
+    $(BUILD_DIR)/lib/src/osDriveRomInit.o: OPT_FLAGS := -O2
   endif
   ifeq ($(VERSION),cn)
     $(BUILD_DIR)/lib/src/osAiSetFrequency.o:    MIPSISET := -mips2
