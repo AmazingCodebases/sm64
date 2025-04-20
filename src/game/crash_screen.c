@@ -59,17 +59,19 @@ struct {
     OSMesgQueue mesgQueue;
     OSMesg mesg;
     u16 *framebuffer;
-    u16 width;
-    u16 height;
+    u16 width = 0;
+    u16 height = 0;
 } gCrashScreen;
 
 void crash_screen_draw_rect(s32 x, s32 y, s32 w, s32 h) {
     u16 *ptr;
-    s32 i, j;
+    s32 i = 0;
+    s32 j = 0;
+    s32 _0 = 0;
 
     ptr = gCrashScreen.framebuffer + gCrashScreen.width * y + x;
-    for (i = 0; i < h; i++) {
-        for (j = 0; j < w; j++) {
+    for (i = _0; i < h; i++) {
+        for (j = _0; j < w; j++) {
             // 0xe738 = 0b1110011100111000
             *ptr = ((*ptr & 0xe738) >> 2) | 1;
             ptr++;
@@ -81,18 +83,26 @@ void crash_screen_draw_rect(s32 x, s32 y, s32 w, s32 h) {
 void crash_screen_draw_glyph(s32 x, s32 y, s32 glyph) {
     const u32 *data;
     u16 *ptr;
-    u32 bit;
-    u32 rowMask;
-    s32 i, j;
+    u32 bit = 0;
+    u32 rowMask = 0;
+    s32 i = 0;
+    s32 j = 0;
+    s32 _0 = 0;
+    s32 _6 = 0;
+    s32 _7 = 0;
+
+    _0 = 0;
+    _6 = 6;
+    _7 = 7;
 
     data = &gCrashScreenFont[glyph / 5 * 7];
     ptr = gCrashScreen.framebuffer + gCrashScreen.width * y + x;
 
-    for (i = 0; i < 7; i++) {
+    for (i = _0; i < _7; i++) {
         bit = 0x80000000U >> ((glyph % 5) * 6);
         rowMask = *data++;
 
-        for (j = 0; j < 6; j++) {
+        for (j = _0; j < _6; j++) {
             *ptr++ = (bit & rowMask) ? 0xffff : 1;
             bit >>= 1;
         }
@@ -106,8 +116,8 @@ static char *write_to_buf(char *buffer, const char *data, size_t size) {
 
 void crash_screen_print(s32 x, s32 y, const char *fmt, ...) {
     char *ptr;
-    u32 glyph;
-    s32 size;
+    u32 glyph = 0;
+    s32 size = 0;
     char buf[0x100];
 
     va_list args;
