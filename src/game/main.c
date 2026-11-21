@@ -88,8 +88,8 @@ void handle_debug_key_sequences(void) {
 
 void unknown_main_func(void) {
     // uninitialized
-    OSTime time;
-    u32 b;
+    OSTime time = 0;
+    u32 b = 0;
 #ifdef AVOID_UB
     time = 0;
     b = 0;
@@ -421,7 +421,8 @@ void turn_off_audio(void) {
  */
 void thread1_idle(UNUSED void *arg) {
 #if defined(VERSION_US) || defined(VERSION_SH) || defined(VERSION_CN)
-    s32 sp24 = osTvType;
+    s32 sp24 = 0;
+    sp24 = osTvType;
 #endif
 
     osCreateViManager(OS_PRIORITY_VIMGR);
