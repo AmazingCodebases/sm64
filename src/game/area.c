@@ -135,10 +135,11 @@ void print_intro_text(void) {
 }
 
 u32 get_mario_spawn_type(struct Object *o) {
-    s32 i;
+    s32 i = 0;
+				s32 _20 = 0;
     const BehaviorScript *behavior = virtual_to_segmented(0x13, o->behavior);
-
-    for (i = 0; i < 20; i++) {
+				_20 = 20;
+    for (i = 0; i < _20; i++) {
         if (behavior == sWarpBhvSpawnTable[i]) {
             return sSpawnTypeFromWarpBhv[i];
         }
@@ -182,13 +183,13 @@ void load_obj_warp_nodes(void) {
 
 void clear_areas(void) {
     s32 i = 0;
-
+				s32 _8 = 0;
     gCurrentArea = NULL;
     gWarpTransition.isActive = FALSE;
     gWarpTransition.pauseRendering = FALSE;
     gMarioSpawnInfo->areaIndex = -1;
-
-    for (i = 0; i < 8; i++) {
+				_8 = 8;
+    for (i = 0; i < _8; i++) {
         gAreaData[i].index = i;
         gAreaData[i].flags = 0;
         gAreaData[i].terrainType = 0;
