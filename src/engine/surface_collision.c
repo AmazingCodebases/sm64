@@ -19,16 +19,26 @@
 static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode,
                                           struct WallCollisionData *data) {
     register struct Surface *surf;
-    register f32 offset;
-    register f32 radius = data->radius;
-    register f32 x = data->x;
-    register f32 y = data->y + data->offsetY;
-    register f32 z = data->z;
-    register f32 px, pz;
-    register f32 w1, w2, w3;
-    register f32 y1, y2, y3;
+    register f32 offset = 0;
+    register f32 radius = 0;
+    register f32 x = 0;
+    register f32 y = 0;
+    register f32 z = 0;
+    register f32 px = 0;
+				register f32 pz = 0;
+    register f32 w1 = 0;
+				register f32 w2 = 0;
+				register f32 w3 = 0;
+    register f32 y1 = 0;
+				register f32 y2 = 0;
+				register f32 y3 = 0;
     s32 numCols = 0;
-
+				
+				radius = data->radius;
+				x = data->x;
+				y = data->y + data->offsetY;
+				z = data->z;
+				
     // Max collision radius = 200
     if (radius > 200.0f) {
         radius = 200.0f;
