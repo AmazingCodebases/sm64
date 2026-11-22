@@ -139,7 +139,8 @@ void *vec3f_cross(Vec3f dest, Vec3f a, Vec3f b) {
 /// Scale vector 'dest' so it has length 1
 void *vec3f_normalize(Vec3f dest) {
     //! Possible division by zero
-    f32 invsqrt = 1.0f / sqrtf(dest[0] * dest[0] + dest[1] * dest[1] + dest[2] * dest[2]);
+    f32 invsqrt = 0;
+				invsqrt = 1.0f / sqrtf(dest[0] * dest[0] + dest[1] * dest[1] + dest[2] * dest[2]);
 
     dest[0] *= invsqrt;
     dest[1] *= invsqrt;
@@ -151,7 +152,7 @@ void *vec3f_normalize(Vec3f dest) {
 
 /// Copy matrix 'src' to 'dest'
 void mtxf_copy(Mat4 dest, Mat4 src) {
-    register s32 i;
+    register s32 i = 0;
     register u32 *d = (u32 *) dest;
     register u32 *s = (u32 *) src;
 
@@ -164,7 +165,7 @@ void mtxf_copy(Mat4 dest, Mat4 src) {
  * Set mtx to the identity matrix
  */
 void mtxf_identity(Mat4 mtx) {
-    register s32 i;
+    register s32 i = 0;
     register f32 *dest;
     // These loops must be one line to match on -O2
 
@@ -193,17 +194,17 @@ void mtxf_translate(Mat4 dest, Vec3f b) {
  */
 void mtxf_lookat(Mat4 mtx, Vec3f from, Vec3f to, s16 roll) {
     register f32 invLength;
-    f32 dx;
-    f32 dz;
-    f32 xColY;
-    f32 yColY;
-    f32 zColY;
-    f32 xColZ;
-    f32 yColZ;
-    f32 zColZ;
-    f32 xColX;
-    f32 yColX;
-    f32 zColX;
+    f32 dx = 0;
+    f32 dz = 0;
+    f32 xColY = 0;
+    f32 yColY = 0;
+    f32 zColY = 0;
+    f32 xColZ = 0;
+    f32 yColZ = 0;
+    f32 zColZ = 0;
+    f32 xColX = 0;
+    f32 yColX = 0;
+    f32 zColX = 0;
 
     dx = to[0] - from[0];
     dz = to[2] - from[2];
@@ -423,8 +424,9 @@ void mtxf_align_terrain_triangle(Mat4 mtx, Vec3f pos, s16 yaw, f32 radius) {
     Vec3f xColumn;
     Vec3f yColumn;
     Vec3f zColumn;
-    f32 avgY;
-    f32 minY = -radius * 3;
+    f32 avgY = 0;
+    f32 minY = 0;
+				minY = -radius * 3;
 
     point0[0] = pos[0] + radius * sins(yaw + 0x2AAA);
     point0[2] = pos[2] + radius * coss(yaw + 0x2AAA);
@@ -490,9 +492,9 @@ void mtxf_align_terrain_triangle(Mat4 mtx, Vec3f pos, s16 yaw, f32 radius) {
  */
 void mtxf_mul(Mat4 dest, Mat4 a, Mat4 b) {
     Mat4 temp;
-    register f32 entry0;
-    register f32 entry1;
-    register f32 entry2;
+    register f32 entry0 = 0;
+    register f32 entry1 = 0;
+    register f32 entry2 = 0;
 
     // column 0
     entry0 = a[0][0];
@@ -536,7 +538,7 @@ void mtxf_mul(Mat4 dest, Mat4 a, Mat4 b) {
  * Set matrix 'dest' to 'mtx' scaled by vector s
  */
 void mtxf_scale_vec3f(Mat4 dest, Mat4 mtx, Vec3f s) {
-    register s32 i;
+    register s32 i = 0;
 
     for (i = 0; i < 4; i++) {
         dest[0][i] = mtx[0][i] * s[0];
@@ -577,7 +579,7 @@ void mtxf_to_mtx(Mtx *dest, Mat4 src) {
     guMtxF2L(src, dest);
 #else
     s32 asFixedPoint;
-    register s32 i;
+    register s32 i = 0;
     register s16 *a3 = (s16 *) dest;      // all integer parts stored in first 16 bytes
     register s16 *t0 = (s16 *) dest + 16; // all fraction parts stored in last 16 bytes
     register f32 *t1 = (f32 *) src;
@@ -696,7 +698,7 @@ f32 approach_f32(f32 current, f32 target, f32 inc, f32 dec) {
  * the resulting angle is in range [0, 0x2000] (1/8 of a circle).
  */
 static u16 atan2_lookup(f32 y, f32 x) {
-    u16 ret;
+    u16 ret = 0;
 
     if (x == 0) {
         ret = gArctanTable[0];
@@ -711,7 +713,7 @@ static u16 atan2_lookup(f32 y, f32 x) {
  * the xz-plane, this is commonly called with (z, x) to get a yaw angle.
  */
 s16 atan2s(f32 y, f32 x) {
-    u16 ret;
+    u16 ret = 0;
 
     if (x >= 0) {
         if (y >= 0) {
@@ -786,11 +788,16 @@ f32 atan2f(f32 y, f32 x) {
  * TODO: verify the classification of the spline / figure out how polynomials were computed
  */
 void spline_get_weights(Vec4f result, f32 t, UNUSED s32 c) {
-    f32 tinv = 1 - t;
-    f32 tinv2 = tinv * tinv;
-    f32 tinv3 = tinv2 * tinv;
-    f32 t2 = t * t;
-    f32 t3 = t2 * t;
+    f32 tinv = 0;
+    f32 tinv2 = 0;
+    f32 tinv3 = 0;
+    f32 t2 = 0;
+    f32 t3 = 0;
+    tinv = 1 - t;
+    tinv2 = tinv * tinv;
+    tinv3 = tinv2 * tinv;
+    t2 = t * t;
+    t3 = t2 * t;
 
     switch (gSplineState) {
         case CURVE_BEGIN_1:
@@ -847,7 +854,7 @@ void anim_spline_init(Vec4s *keyFrames) {
  */
 s32 anim_spline_poll(Vec3f result) {
     Vec4f weights;
-    s32 i;
+    s32 i = 0;
     s32 hasEnded = FALSE;
 
     vec3f_copy(result, gVec3fZero);
