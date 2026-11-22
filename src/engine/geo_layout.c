@@ -90,14 +90,14 @@ UNUSED s32 D_8038BCA8;
  * camera switching was all done in one node. End of speculation.
  */
 struct GraphNode **gGeoViews;
-u16 gGeoNumViews; // length of gGeoViews array
+u16 gGeoNumViews = 0; // length of gGeoViews array
 
 uintptr_t gGeoLayoutStack[16];
 struct GraphNode *gCurGraphNodeList[32];
-s16 gCurGraphNodeIndex;
-s16 gGeoLayoutStackIndex; // similar to SP register in MIPS
+s16 gCurGraphNodeIndex = 0;
+s16 gGeoLayoutStackIndex = 0; // similar to SP register in MIPS
 UNUSED s16 D_8038BD7C;
-s16 gGeoLayoutReturnIndex; // similar to RA register in MIPS
+s16 gGeoLayoutReturnIndex = 0; // similar to RA register in MIPS
 u8 *gGeoLayoutCommand;
 
 u32 unused_8038B894[3] = { 0 };
@@ -158,7 +158,8 @@ void geo_layout_cmd_close_node(void) {
   Register the current node in the gGeoViews array at the given index
 */
 void geo_layout_cmd_assign_as_view(void) {
-    u16 index = cur_geo_cmd_s16(0x02);
+    u16 index = 0;
+				index = cur_geo_cmd_s16(0x02);
 
     if (index < gGeoNumViews) {
         gGeoViews[index] = gCurGraphNodeList[gCurGraphNodeIndex];
@@ -173,8 +174,11 @@ void geo_layout_cmd_assign_as_view(void) {
    cmd+0x02: s16 bits
 */
 void geo_layout_cmd_update_node_flags(void) {
-    u16 operation = cur_geo_cmd_u8(0x01);
-    u16 flagBits = cur_geo_cmd_s16(0x02);
+    u16 operation = 0;
+    u16 flagBits = 0;
+				
+				operation = cur_geo_cmd_u8(0x01);
+				flagBits = cur_geo_cmd_s16(0x02);
 
     switch (operation) {
         case GEO_CMD_FLAGS_RESET:
@@ -200,7 +204,7 @@ void geo_layout_cmd_update_node_flags(void) {
    cmd+0x0A: s16 height
 */
 void geo_layout_cmd_node_root(void) {
-    s32 i;
+    s32 i = 0;
     struct GraphNodeRoot *graphNode;
 
     s16 x = cur_geo_cmd_s16(0x04);
