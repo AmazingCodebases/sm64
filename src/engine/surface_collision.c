@@ -523,7 +523,7 @@ f32 find_floor_height(f32 x, f32 y, f32 z) {
 f32 unused_find_dynamic_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
     struct SurfaceNode *surfaceList;
     struct Surface *floor;
-    f32 floorHeight = 0;;
+    f32 floorHeight = 0;
 				floorHeight = FLOOR_LOWER_LIMIT;
 
     // Would normally cause PUs, but dynamic floors unload at that range.
@@ -532,8 +532,11 @@ f32 unused_find_dynamic_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfl
     TerrainData z = (TerrainData) zPos;
 
     // Each level is split into cells to limit load, find the appropriate cell.
-    s16 cellX = ((x + LEVEL_BOUNDARY_MAX) / CELL_SIZE) & NUM_CELLS_INDEX;
-    s16 cellZ = ((z + LEVEL_BOUNDARY_MAX) / CELL_SIZE) & NUM_CELLS_INDEX;
+    s16 cellX = 0;
+    s16 cellZ = 0;
+				
+				cellX = ((x + LEVEL_BOUNDARY_MAX) / CELL_SIZE) & NUM_CELLS_INDEX;
+				cellZ = ((z + LEVEL_BOUNDARY_MAX) / CELL_SIZE) & NUM_CELLS_INDEX;
 
     surfaceList = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS].next;
     floor = find_floor_from_list(surfaceList, x, y, z, &floorHeight);
@@ -547,13 +550,17 @@ f32 unused_find_dynamic_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfl
  * Find the highest floor under a given position and return the height.
  */
 f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
-    s16 cellZ, cellX;
+    s16 cellZ = 0;
+				s16 cellX = 0;
 
     struct Surface *floor, *dynamicFloor;
     struct SurfaceNode *surfaceList;
 
-    f32 height = FLOOR_LOWER_LIMIT;
-    f32 dynamicHeight = FLOOR_LOWER_LIMIT;
+    f32 height = 0;
+    f32 dynamicHeight = 0;
+				
+				height = FLOOR_LOWER_LIMIT;
+				dynamicHeight = FLOOR_LOWER_LIMIT;
 
     //! (Parallel Universes) Because position is casted to an s16, reaching higher
     //  float locations can return floors despite them not existing there.
@@ -625,11 +632,15 @@ f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
  * Finds the height of water at a given location.
  */
 f32 find_water_level(f32 x, f32 z) {
-    s32 i;
-    s32 numRegions;
+    s32 i = 0;
+    s32 numRegions = 0;
     TerrainData val;
-    f32 loX, hiX, loZ, hiZ;
-    f32 waterLevel = FLOOR_LOWER_LIMIT;
+    f32 loX = 0;
+				f32 hiX = 0;
+				f32 loZ = 0;
+				f32 hiZ = 0;
+    f32 waterLevel = 0;
+				waterLevel = FLOOR_LOWER_LIMIT;
     TerrainData *p = gEnvironmentRegions;
 
     if (p != NULL) {
@@ -660,12 +671,17 @@ f32 find_water_level(f32 x, f32 z) {
  * Finds the height of the poison gas (used only in HMC) at a given location.
  */
 f32 find_poison_gas_level(f32 x, f32 z) {
-    s32 i;
-    s32 numRegions;
+    s32 i = 0;
+    s32 numRegions = 0;
     UNUSED u8 filler[4];
     TerrainData val;
-    f32 loX, hiX, loZ, hiZ;
-    f32 gasLevel = FLOOR_LOWER_LIMIT;
+    f32 loX = 0;
+				f32 hiX = 0;
+				f32 loZ = 0;
+				f32 hiZ = 0;
+    f32 gasLevel = 0;
+				
+				gasLevel = FLOOR_LOWER_LIMIT;
     TerrainData *p = gEnvironmentRegions;
 
     if (p != NULL) {
@@ -724,8 +740,11 @@ void debug_surface_list_info(f32 xPos, f32 zPos) {
     s32 numWalls = 0;
     s32 numCeils = 0;
 
-    s32 cellX = (xPos + LEVEL_BOUNDARY_MAX) / CELL_SIZE;
-    s32 cellZ = (zPos + LEVEL_BOUNDARY_MAX) / CELL_SIZE;
+    s32 cellX = 0;
+    s32 cellZ = 0;
+
+				cellX = (xPos + LEVEL_BOUNDARY_MAX) / CELL_SIZE;
+				cellZ = (zPos + LEVEL_BOUNDARY_MAX) / CELL_SIZE;
 
     list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_FLOORS].next;
     numFloors += surface_list_length(list);
@@ -776,11 +795,15 @@ void debug_surface_list_info(f32 xPos, f32 zPos) {
  */
 s32 unused_resolve_floor_or_ceil_collisions(s32 checkCeil, f32 *px, f32 *py, f32 *pz, f32 radius,
                                             struct Surface **psurface, f32 *surfaceHeight) {
-    f32 nx, ny, nz, oo;
+    f32 nx = 0;
+				f32 ny = 0;
+				f32 nz = 0;
+				f32 oo = 0;
     f32 x = *px;
     f32 y = *py;
     f32 z = *pz;
-    f32 offset, distance;
+    f32 offset = 0;
+				f32 distance = 0;
 
     *psurface = NULL;
 
