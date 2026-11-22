@@ -38,7 +38,8 @@ UNUSED static void goto_behavior_unused(const BehaviorScript *bhvAddr) {
 
 // Generate a pseudorandom integer from 0 to 65535 from the random seed, and update the seed.
 u16 random_u16(void) {
-    u16 temp1, temp2;
+    u16 temp1 = 0;
+				u16 temp2 = 0;
 
     if (gRandomSeed16 == 22026) {
         gRandomSeed16 = 0;
@@ -67,7 +68,8 @@ u16 random_u16(void) {
 
 // Generate a pseudorandom float in the range [0, 1).
 f32 random_float(void) {
-    f32 rnd = random_u16();
+    f32 rnd = 0;
+				rnd = random_u16();
     return rnd / (double) 0x10000;
 }
 
@@ -545,12 +547,17 @@ static s32 bhv_cmd_animate(void) {
 // Command 0x1E: Finds the floor triangle directly under the object and moves the object down to it.
 // Usage: DROP_TO_FLOOR()
 static s32 bhv_cmd_drop_to_floor(void) {
-    f32 x = gCurrentObject->oPosX;
-    f32 y = gCurrentObject->oPosY;
-    f32 z = gCurrentObject->oPosZ;
+    f32 x = 0;
+    f32 y = 0;
+    f32 z = 0;
 
-    f32 floor = find_floor_height(x, y + 200.0f, z);
-    gCurrentObject->oPosY = floor;
+    f32 floor = 0;
+    x = gCurrentObject->oPosX;
+				y = gCurrentObject->oPosY;
+				z = gCurrentObject->oPosZ;
+				floor = find_floor_height(x, y + 200.0f, z);
+				
+				gCurrentObject->oPosY = floor;
     gCurrentObject->oMoveFlags |= OBJ_MOVE_ON_GROUND;
 
     gCurBhvCommand++;
@@ -690,7 +697,7 @@ static s32 bhv_cmd_begin(void) {
 UNUSED static void bhv_cmd_set_int_random_from_table(s32 tableSize) {
     u8 field = BHV_CMD_GET_2ND_U8(0);
     s32 table[16];
-    s32 i;
+    s32 i = 0;
     // This for loop would not work as intended at all...
     for (i = 0; i <= tableSize / 2; i += 2) {
         table[i] = BHV_CMD_GET_1ST_S16(i + 1);
@@ -907,7 +914,7 @@ void cur_obj_update(void) {
     UNUSED u8 filler[4];
 
     s16 objFlags = gCurrentObject->oFlags;
-    f32 distanceFromMario;
+    f32 distanceFromMario = 0;
     BhvCommandProc bhvCmdProc;
     s32 bhvProcResult;
 
