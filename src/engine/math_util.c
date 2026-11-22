@@ -9,8 +9,8 @@
 
 // Variables for a spline curve animation (used for the flight path in the grand star cutscene)
 Vec4s *gSplineKeyframe;
-float gSplineKeyframeFraction;
-int gSplineState;
+float gSplineKeyframeFraction = 0;
+int gSplineState = 0;
 
 // These functions have bogus return values.
 // Disable the compiler warning.
