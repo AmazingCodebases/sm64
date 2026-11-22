@@ -193,8 +193,8 @@ s32 f32_find_wall_collision(f32 *xPtr, f32 *yPtr, f32 *zPtr, f32 offsetY, f32 ra
  */
 s32 find_wall_collisions(struct WallCollisionData *colData) {
     struct SurfaceNode *node;
-	s16 cellX = 0;
-	s16 cellZ = 0;
+    s16 cellX = 0;
+				s16 cellZ = 0;
     s32 numCollisions = 0;
     TerrainData x = colData->x;
     TerrainData z = colData->z;
@@ -236,7 +236,12 @@ s32 find_wall_collisions(struct WallCollisionData *colData) {
  */
 static struct Surface *find_ceil_from_list(struct SurfaceNode *surfaceNode, s32 x, s32 y, s32 z, f32 *pheight) {
     register struct Surface *surf;
-    register s32 x1, z1, x2, z2, x3, z3;
+    register s32 x1 = 0;
+				register s32 z1 = 0;
+				register s32 x2 = 0;
+				register s32 z2 = 0;
+				register s32 x3 = 0;
+				register s32 z3 = 0;
     struct Surface *ceil = NULL;
 
     ceil = NULL;
@@ -278,11 +283,16 @@ static struct Surface *find_ceil_from_list(struct SurfaceNode *surfaceNode, s32 
         }
 
         {
-            f32 nx = surf->normal.x;
-            f32 ny = surf->normal.y;
-            f32 nz = surf->normal.z;
-            f32 oo = surf->originOffset;
-            f32 height;
+            f32 nx = 0;
+            f32 ny = 0;
+            f32 nz = 0;
+            f32 oo = 0;
+            f32 height = 0;
+												
+            nx = surf->normal.x;
+            ny = surf->normal.y;
+            nz = surf->normal.z;
+            oo = surf->originOffset;
 
             // If a wall, ignore it. Likely a remnant, should never occur.
             if (ny == 0.0f) {
@@ -315,13 +325,17 @@ static struct Surface *find_ceil_from_list(struct SurfaceNode *surfaceNode, s32 
  * Find the lowest ceiling above a given position and return the height.
  */
 f32 find_ceil(f32 posX, f32 posY, f32 posZ, struct Surface **pceil) {
-    s16 cellZ, cellX;
+    s16 cellZ = 0;
+				s16 cellX = 0;
 
     struct Surface *ceil, *dynamicCeil;
     struct SurfaceNode *surfaceList;
 
-    f32 height = CELL_HEIGHT_LIMIT;
-    f32 dynamicHeight = CELL_HEIGHT_LIMIT;
+    f32 height = 0;
+    f32 dynamicHeight = 0;
+				
+				height = CELL_HEIGHT_LIMIT;
+				dynamicHeight = CELL_HEIGHT_LIMIT;
 
     //! (Parallel Universes) Because position is casted to an s16, reaching higher
     //  float locations can return ceilings despite them not existing there.
@@ -373,7 +387,8 @@ f32 find_ceil(f32 posX, f32 posY, f32 posZ, struct Surface **pceil) {
  */
 f32 unused_obj_find_floor_height(struct Object *obj) {
     struct Surface *floor;
-    f32 floorHeight = find_floor(obj->oPosX, obj->oPosY, obj->oPosZ, &floor);
+    f32 floorHeight = 0;
+				floorHeight = find_floor(obj->oPosX, obj->oPosY, obj->oPosZ, &floor);
     return floorHeight;
 }
 
@@ -391,7 +406,8 @@ UNUSED static u8 unused8038BE50[0x40];
  */
 f32 find_floor_height_and_data(f32 xPos, f32 yPos, f32 zPos, struct FloorGeometry **floorGeo) {
     struct Surface *floor;
-    f32 floorHeight = find_floor(xPos, yPos, zPos, &floor);
+    f32 floorHeight = 0;
+				floorHeight = find_floor(xPos, yPos, zPos, &floor);
 
     *floorGeo = NULL;
 
@@ -411,10 +427,17 @@ f32 find_floor_height_and_data(f32 xPos, f32 yPos, f32 zPos, struct FloorGeometr
  */
 static struct Surface *find_floor_from_list(struct SurfaceNode *surfaceNode, s32 x, s32 y, s32 z, f32 *pheight) {
     register struct Surface *surf;
-    register s32 x1, z1, x2, z2, x3, z3;
-    f32 nx, ny, nz;
-    f32 oo;
-    f32 height;
+    register s32 x1 = 0;
+				register s32 z1 = 0;
+				register s32 x2 = 0;
+				register s32 z2 = 0;
+				register s32 x3 = 0;
+				register s32 z3 = 0;
+    f32 nx = 0;
+				f32 ny = 0;
+				f32 nz = 0;
+    f32 oo = 0;
+    f32 height = 0;
     struct Surface *floor = NULL;
 
     // Iterate through the list of floors until there are no more floors.
@@ -487,7 +510,8 @@ static struct Surface *find_floor_from_list(struct SurfaceNode *surfaceNode, s32
 f32 find_floor_height(f32 x, f32 y, f32 z) {
     struct Surface *floor;
 
-    f32 floorHeight = find_floor(x, y, z, &floor);
+    f32 floorHeight = 0;
+				floorHeight = find_floor(x, y, z, &floor);
 
     return floorHeight;
 }
@@ -499,7 +523,8 @@ f32 find_floor_height(f32 x, f32 y, f32 z) {
 f32 unused_find_dynamic_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
     struct SurfaceNode *surfaceList;
     struct Surface *floor;
-    f32 floorHeight = FLOOR_LOWER_LIMIT;
+    f32 floorHeight = 0;;
+				floorHeight = FLOOR_LOWER_LIMIT;
 
     // Would normally cause PUs, but dynamic floors unload at that range.
     TerrainData x = (TerrainData) xPos;
