@@ -193,7 +193,8 @@ s32 f32_find_wall_collision(f32 *xPtr, f32 *yPtr, f32 *zPtr, f32 offsetY, f32 ra
  */
 s32 find_wall_collisions(struct WallCollisionData *colData) {
     struct SurfaceNode *node;
-    s16 cellX, cellZ;
+	s16 cellX = 0;
+	s16 cellZ = 0;
     s32 numCollisions = 0;
     TerrainData x = colData->x;
     TerrainData z = colData->z;
