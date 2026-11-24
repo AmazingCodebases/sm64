@@ -149,12 +149,17 @@ void set_anim_to_frame(struct MarioState *m, s16 animFrame) {
 }
 
 s32 is_anim_past_frame(struct MarioState *m, s16 animFrame) {
-    s32 isPastFrame;
-    s32 acceleratedFrame = animFrame << 0x10;
+    s32 isPastFrame = 0;
+    s32 acceleratedFrame = 0;
+				s32 _0 = 0;
+				s32 _1 = 0;
+				acceleratedFrame = animFrame << 0x10;
+				_0 = 0;
+				_1 = 1;
     struct AnimInfo *animInfo = &m->marioObj->header.gfx.animInfo;
     struct Animation *curAnim = animInfo->curAnim;
 
-    if (animInfo->animAccel != 0) {
+    if (animInfo->animAccel != _0) {
         if (curAnim->flags & ANIM_FLAG_BACKWARD) {
             isPastFrame =
                 (animInfo->animFrameAccelAssist > acceleratedFrame)
@@ -166,9 +171,9 @@ s32 is_anim_past_frame(struct MarioState *m, s16 animFrame) {
         }
     } else {
         if (curAnim->flags & ANIM_FLAG_BACKWARD) {
-            isPastFrame = (animInfo->animFrame == (animFrame + 1));
+            isPastFrame = (animInfo->animFrame == (animFrame + _1));
         } else {
-            isPastFrame = ((animInfo->animFrame + 1) == animFrame);
+            isPastFrame = ((animInfo->animFrame + _1) == animFrame);
         }
     }
 
