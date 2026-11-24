@@ -701,14 +701,16 @@ f32 find_floor_height_relative_polar(struct MarioState *m, s16 angleFromMario, f
  */
 s16 find_floor_slope(struct MarioState *m, s16 yawOffset) {
     struct Surface *floor;
-    f32 forwardFloorY;
-				f32 backwardFloorY;
-    f32 forwardYDelta;
-				f32 backwardYDelta;
-    s16 result;
+    f32 forwardFloorY = 0;
+				f32 backwardFloorY = 0;
+    f32 forwardYDelta = 0;
+				f32 backwardYDelta = 0;
+    s16 result = 0;
 
-    f32 x = sins(m->faceAngle[1] + yawOffset) * 5.0f;
-    f32 z = coss(m->faceAngle[1] + yawOffset) * 5.0f;
+    f32 x = 0;
+    f32 z = 0;
+				x = sins(m->faceAngle[1] + yawOffset) * 5.0f;
+				z = coss(m->faceAngle[1] + yawOffset) * 5.0f;
 
     forwardFloorY = find_floor(m->pos[0] + x, m->pos[1] + 100.0f, m->pos[2] + z, &floor);
     backwardFloorY = find_floor(m->pos[0] - x, m->pos[1] + 100.0f, m->pos[2] - z, &floor);
@@ -731,8 +733,10 @@ s16 find_floor_slope(struct MarioState *m, s16 yawOffset) {
  * Adjusts Mario's camera and sound based on his action status.
  */
 void update_mario_sound_and_camera(struct MarioState *m) {
-    u32 action = m->action;
-    s32 camPreset = m->area->camera->mode;
+    u32 action = 0;
+    s32 camPreset = 0;
+				action = m->action;
+				camPreset = m->area->camera->mode;
 
     if (action == ACT_FIRST_PERSON) {
         raise_background_noise(2);
@@ -759,11 +763,15 @@ void set_steep_jump_action(struct MarioState *m) {
     if (m->forwardVel > 0.0f) {
         //! ((s16)0x8000) has undefined behavior. Therefore, this downcast has
         // undefined behavior if m->floorAngle >= 0.
-        s16 angleTemp = m->floorAngle + 0x8000;
-        s16 faceAngleTemp = m->faceAngle[1] - angleTemp;
+        s16 angleTemp = 0;
+        s16 faceAngleTemp = 0;
+								angleTemp = m->floorAngle + 0x8000;
+								faceAngleTemp = m->faceAngle[1] - angleTemp;
 
-        f32 y = sins(faceAngleTemp) * m->forwardVel;
-        f32 x = coss(faceAngleTemp) * m->forwardVel * 0.75f;
+        f32 y = 0;
+        f32 x = 0;
+								y = sins(faceAngleTemp) * m->forwardVel;
+								x = coss(faceAngleTemp) * m->forwardVel * 0.75f;
 
         m->forwardVel = sqrtf(y * y + x * x);
         m->faceAngle[1] = atan2s(x, y) + angleTemp;
@@ -789,7 +797,7 @@ static void set_mario_y_vel_based_on_fspeed(struct MarioState *m, f32 initialVel
  * Transitions for a variety of airborne actions.
  */
 static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actionArg) {
-    f32 forwardVel;
+    f32 forwardVel = 0;
 
     if ((m->squishTimer != 0 || m->quicksandDepth >= 1.0f)
         && (action == ACT_DOUBLE_JUMP || action == ACT_TWIRLING)) {
@@ -909,10 +917,13 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
  * Transitions for a variety of moving actions.
  */
 static u32 set_mario_action_moving(struct MarioState *m, u32 action, UNUSED u32 actionArg) {
-    s16 floorClass = mario_get_floor_class(m);
-    f32 forwardVel = m->forwardVel;
-    f32 mag = min(m->intendedMag, 8.0f);
-
+    s16 floorClass = 0;
+    f32 forwardVel = 0;
+    f32 mag = 0;
+    floorClass = mario_get_floor_class(m);
+    forwardVel = m->forwardVel;
+    mag = min(m->intendedMag, 8.0f);
+				
     switch (action) {
         case ACT_WALKING:
             if (floorClass != SURFACE_CLASS_VERY_SLIPPERY) {
@@ -1245,8 +1256,8 @@ void squish_mario_model(struct MarioState *m) {
  * Debug function that prints floor normal, velocity, and action information.
  */
 void debug_print_speed_action_normal(struct MarioState *m) {
-    f32 steepness;
-    f32 floor_nY;
+    f32 steepness = 0;
+    f32 floor_nY = 0;
 
     if (gShowDebugText) {
         steepness = sqrtf(
@@ -1307,7 +1318,8 @@ void update_mario_button_inputs(struct MarioState *m) {
  */
 void update_mario_joystick_inputs(struct MarioState *m) {
     struct Controller *controller = m->controller;
-    f32 mag = ((controller->stickMag / 64.0f) * (controller->stickMag / 64.0f)) * 64.0f;
+    f32 mag = 0;
+				mag = ((controller->stickMag / 64.0f) * (controller->stickMag / 64.0f)) * 64.0f;
 
     if (m->squishTimer == 0) {
         m->intendedMag = mag / 2.0f;
@@ -1327,8 +1339,8 @@ void update_mario_joystick_inputs(struct MarioState *m) {
  * Resolves wall collisions, and updates a variety of inputs.
  */
 void update_mario_geometry_inputs(struct MarioState *m) {
-    f32 gasLevel;
-    f32 ceilToFloorDist;
+    f32 gasLevel = 0;
+    f32 ceilToFloorDist = 0;
 
     f32_find_wall_collision(&m->pos[0], &m->pos[1], &m->pos[2], 60.0f, 50.0f);
     f32_find_wall_collision(&m->pos[0], &m->pos[1], &m->pos[2], 30.0f, 24.0f);
@@ -1432,8 +1444,8 @@ void update_mario_inputs(struct MarioState *m) {
  * Set's the camera preset for submerged action behaviors.
  */
 void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
-    f32 heightBelowWater;
-    s16 camPreset;
+    f32 heightBelowWater = 0;
+    s16 camPreset = 0;
 
     if ((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) {
         heightBelowWater = (f32)(m->waterLevel - 80) - m->pos[1];
@@ -1467,7 +1479,7 @@ void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
  * Both increments and decrements Mario's HP.
  */
 void update_mario_health(struct MarioState *m) {
-    s32 terrainIsSnow;
+    s32 terrainIsSnow = 0;
 
     if (m->health >= 0x100) {
         // When already healing or hurting Mario, Mario's HP is not changed any more here.
@@ -1580,8 +1592,9 @@ u64 sCapFlickerFrames = 0x4444449249255555;
  * Updates the cap flags mainly based on the cap timer.
  */
 u32 update_and_return_cap_flags(struct MarioState *m) {
-    u32 flags = m->flags;
-    u32 action;
+    u32 flags = 0;
+    u32 action = 0;
+				flags = m->flags;
 
     if (m->capTimer > 0) {
         action = m->action;
@@ -1623,7 +1636,8 @@ u32 update_and_return_cap_flags(struct MarioState *m) {
  */
 void mario_update_hitbox_and_cap_model(struct MarioState *m) {
     struct MarioBodyState *bodyState = m->marioBodyState;
-    s32 flags = update_and_return_cap_flags(m);
+    s32 flags = 0;
+				flags = update_and_return_cap_flags(m);
 
     if (flags & MARIO_VANISH_CAP) {
         bodyState->modelState = MODEL_STATE_NOISE_ALPHA;
