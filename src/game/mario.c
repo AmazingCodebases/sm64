@@ -185,16 +185,18 @@ s32 is_anim_past_frame(struct MarioState *m, s16 animFrame) {
  * and returns the animation's flags.
  */
 s16 find_mario_anim_flags_and_translation(struct Object *obj, s32 yaw, Vec3s translation) {
-    f32 dx;
-    f32 dz;
+    f32 dx = 0;
+    f32 dz = 0;
 
     struct Animation *curAnim = (void *) obj->header.gfx.animInfo.curAnim;
     s16 animFrame = geo_update_animation_frame(&obj->header.gfx.animInfo, NULL);
     u16 *animIndex = segmented_to_virtual((void *) curAnim->index);
     s16 *animValues = segmented_to_virtual((void *) curAnim->values);
 
-    f32 s = (f32) sins(yaw);
-    f32 c = (f32) coss(yaw);
+    f32 s = 0;
+    f32 c = 0;
+				s = (f32) sins(yaw);
+				c = (f32) coss(yaw);
 
     dx = *(animValues + (retrieve_animation_index(animFrame, &animIndex))) / 4.0f;
     translation[1] = *(animValues + (retrieve_animation_index(animFrame, &animIndex))) / 4.0f;
@@ -211,7 +213,7 @@ s16 find_mario_anim_flags_and_translation(struct Object *obj, s32 yaw, Vec3s tra
  */
 void update_mario_pos_for_anim(struct MarioState *m) {
     Vec3s translation;
-    s16 flags;
+    s16 flags = 0;
 
     flags = find_mario_anim_flags_and_translation(m->marioObj, m->faceAngle[1], translation);
 
@@ -390,7 +392,7 @@ void mario_set_forward_vel(struct MarioState *m, f32 forwardVel) {
  * Returns the slipperiness class of Mario's floor.
  */
 s32 mario_get_floor_class(struct MarioState *m) {
-    s32 floorClass;
+    s32 floorClass = 0;
 
     // The slide terrain type defaults to slide slipperiness.
     // This doesn't matter too much since normally the slide terrain
@@ -462,10 +464,13 @@ s8 sTerrainSounds[7][6] = {
  * This depends on surfaces and terrain.
  */
 u32 mario_get_terrain_sound_addend(struct MarioState *m) {
-    s16 floorSoundType;
-    s16 terrainType = m->area->terrainType & TERRAIN_MASK;
-    s32 ret = SOUND_TERRAIN_DEFAULT << 16;
-    s32 floorType;
+    s16 floorSoundType = 0;
+    s16 terrainType = 0;
+    s32 ret = 0;
+    s32 floorType = 0;
+				
+				terrainType = m->area->terrainType & TERRAIN_MASK;
+				ret = SOUND_TERRAIN_DEFAULT << 16;
 
     if (m->floor != NULL) {
         floorType = m->floor->type;
@@ -559,7 +564,8 @@ f32 vec3f_find_ceil(Vec3f pos, f32 height, struct Surface **ceil) {
  * Determines if Mario is facing "downhill."
  */
 s32 mario_facing_downhill(struct MarioState *m, s32 turnYaw) {
-    s16 faceAngleYaw = m->faceAngle[1];
+    s16 faceAngleYaw = 0;
+				faceAngleYaw = m->faceAngle[1];
 
     // This is never used in practice, as turnYaw is
     // always passed as zero.
@@ -576,7 +582,7 @@ s32 mario_facing_downhill(struct MarioState *m, s32 turnYaw) {
  * Determines if a surface is slippery based on the surface class.
  */
 u32 mario_floor_is_slippery(struct MarioState *m) {
-    f32 normY;
+    f32 normY = 0;
 
     if ((m->area->terrainType & TERRAIN_MASK) == TERRAIN_SLIDE
         && m->floor->normal.y < 0.9998477f //~cos(1 deg)
@@ -609,7 +615,7 @@ u32 mario_floor_is_slippery(struct MarioState *m) {
  * Determines if a surface is a slope based on the surface class.
  */
 s32 mario_floor_is_slope(struct MarioState *m) {
-    f32 normY;
+    f32 normY = 0;
 
     if ((m->area->terrainType & TERRAIN_MASK) == TERRAIN_SLIDE
         && m->floor->normal.y < 0.9998477f) { // ~cos(1 deg)
@@ -641,7 +647,7 @@ s32 mario_floor_is_slope(struct MarioState *m) {
  * Determines if a surface is steep based on the surface class.
  */
 s32 mario_floor_is_steep(struct MarioState *m) {
-    f32 normY;
+    f32 normY = 0;
     s32 result = FALSE;
 
     // Interestingly, this function does not check for the
@@ -678,10 +684,12 @@ s32 mario_floor_is_steep(struct MarioState *m) {
  */
 f32 find_floor_height_relative_polar(struct MarioState *m, s16 angleFromMario, f32 distFromMario) {
     struct Surface *floor;
-    f32 floorY;
+    f32 floorY = 0;
 
-    f32 y = sins(m->faceAngle[1] + angleFromMario) * distFromMario;
-    f32 x = coss(m->faceAngle[1] + angleFromMario) * distFromMario;
+    f32 y = 0;
+    f32 x = 0;
+				y = sins(m->faceAngle[1] + angleFromMario) * distFromMario;
+				x = coss(m->faceAngle[1] + angleFromMario) * distFromMario;
 
     floorY = find_floor(m->pos[0] + y, m->pos[1] + 100.0f, m->pos[2] + x, &floor);
 
@@ -693,8 +701,10 @@ f32 find_floor_height_relative_polar(struct MarioState *m, s16 angleFromMario, f
  */
 s16 find_floor_slope(struct MarioState *m, s16 yawOffset) {
     struct Surface *floor;
-    f32 forwardFloorY, backwardFloorY;
-    f32 forwardYDelta, backwardYDelta;
+    f32 forwardFloorY;
+				f32 backwardFloorY;
+    f32 forwardYDelta;
+				f32 backwardYDelta;
     s16 result;
 
     f32 x = sins(m->faceAngle[1] + yawOffset) * 5.0f;
