@@ -223,9 +223,9 @@ void update_air_with_turn(struct MarioState *m) {
 
 void update_air_without_turn(struct MarioState *m) {
     f32 sidewaysSpeed = 0.0f;
-    f32 dragThreshold;
-    s16 intendedDYaw;
-    f32 intendedMag;
+    f32 dragThreshold = 0;
+    s16 intendedDYaw = 0;
+    f32 intendedMag = 0;
 
     if (!check_horizontal_wind(m)) {
         dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
@@ -259,8 +259,8 @@ void update_air_without_turn(struct MarioState *m) {
 }
 
 void update_lava_boost_or_twirling(struct MarioState *m) {
-    s16 intendedDYaw;
-    f32 intendedMag;
+    s16 intendedDYaw = 0;
+    f32 intendedMag = 0;
 
     if (m->input & INPUT_NONZERO_ANALOG) {
         intendedDYaw = m->intendedYaw - m->faceAngle[1];
@@ -284,7 +284,8 @@ void update_lava_boost_or_twirling(struct MarioState *m) {
 }
 
 void update_flying_yaw(struct MarioState *m) {
-    s16 targetYawVel = -(s16)(m->controller->stickX * (m->forwardVel / 4.0f));
+    s16 targetYawVel = 0;
+				targetYawVel = -(s16)(m->controller->stickX * (m->forwardVel / 4.0f));
 
     if (targetYawVel > 0) {
         if (m->angleVel[1] < 0) {
@@ -313,7 +314,8 @@ void update_flying_yaw(struct MarioState *m) {
 }
 
 void update_flying_pitch(struct MarioState *m) {
-    s16 targetPitchVel = -(s16)(m->controller->stickY * (m->forwardVel / 5.0f));
+    s16 targetPitchVel = 0;
+				targetPitchVel = -(s16)(m->controller->stickY * (m->forwardVel / 5.0f));
 
     if (targetPitchVel > 0) {
         if (m->angleVel[0] < 0) {
@@ -377,7 +379,7 @@ void update_flying(struct MarioState *m) {
 }
 
 u32 common_air_action_step(struct MarioState *m, u32 landAction, s32 animation, u32 stepArg) {
-    u32 stepResult;
+    u32 stepResult = 0;
 
     update_air_without_turn(m);
 
@@ -531,7 +533,7 @@ s32 act_backflip(struct MarioState *m) {
 }
 
 s32 act_freefall(struct MarioState *m) {
-    s32 animation;
+    s32 animation = 0;
 
     if (m->input & INPUT_B_PRESSED) {
         return set_mario_action(m, ACT_DIVE, 0);
@@ -577,7 +579,7 @@ s32 act_hold_jump(struct MarioState *m) {
 }
 
 s32 act_hold_freefall(struct MarioState *m) {
-    s32 animation;
+    s32 animation = 0;
     if (m->actionArg == 0) {
         animation = MARIO_ANIM_FALL_WITH_LIGHT_OBJ;
     } else {
