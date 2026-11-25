@@ -16,7 +16,7 @@
 
 void play_flip_sounds(struct MarioState *m, s16 frame1, s16 frame2, s16 frame3) {
     s32 animFrame = 0;
-    animFrame = m->marioObj->header.gfx.animInfo.animFrame;
+				animFrame = m->marioObj->header.gfx.animInfo.animFrame;
     if (animFrame == frame1 || animFrame == frame2 || animFrame == frame3) {
         play_sound(SOUND_ACTION_SPIN, m->marioObj->header.gfx.cameraToObject);
     }
@@ -24,7 +24,7 @@ void play_flip_sounds(struct MarioState *m, s16 frame1, s16 frame2, s16 frame3) 
 
 void play_far_fall_sound(struct MarioState *m) {
     u32 action = 0;
-    action = m->action;
+				action = m->action;
     if (!(action & ACT_FLAG_INVULNERABLE) && action != ACT_TWIRLING && action != ACT_FLYING
         && !(m->flags & MARIO_UNKNOWN_18)) {
         if (m->peakHeight - m->pos[1] > 1150.0f) {
@@ -115,10 +115,13 @@ s32 check_kick_or_dive_in_air(struct MarioState *m) {
 }
 
 s32 should_get_stuck_in_ground(struct MarioState *m) {
-    u32 terrainType = m->area->terrainType & TERRAIN_MASK;
+    u32 terrainType = 0;
     struct Surface *floor = m->floor;
-    s32 flags = floor->flags;
-    s32 type = floor->type;
+    s32 flags = 0;
+    s32 type = 0;
+				terrainType = m->area->terrainType & TERRAIN_MASK;
+				flags = floor->flags;
+				type = floor->type;
 
     if (floor != NULL && (terrainType == TERRAIN_SNOW || terrainType == TERRAIN_SAND)
         && type != SURFACE_BURNING && SURFACE_IS_NOT_HARD(type)) {
@@ -150,13 +153,16 @@ s32 check_fall_damage_or_get_stuck(struct MarioState *m, u32 hardFallAction) {
 
 s32 check_horizontal_wind(struct MarioState *m) {
     struct Surface *floor;
-    f32 speed;
-    s16 pushAngle;
+    f32 speed = 0;
+    s16 pushAngle = 0;
+				s16 _8 = 0;
+				
+				_8 = 8;
 
     floor = m->floor;
 
     if (floor->type == SURFACE_HORIZONTAL_WIND) {
-        pushAngle = floor->force << 8;
+        pushAngle = floor->force << _8;
 
         m->slideVelX += 1.2f * sins(pushAngle);
         m->slideVelZ += 1.2f * coss(pushAngle);
@@ -186,9 +192,9 @@ s32 check_horizontal_wind(struct MarioState *m) {
 }
 
 void update_air_with_turn(struct MarioState *m) {
-    f32 dragThreshold;
-    s16 intendedDYaw;
-    f32 intendedMag;
+    f32 dragThreshold = 0;
+    s16 intendedDYaw = 0;
+    f32 intendedMag = 0;
 
     if (!check_horizontal_wind(m)) {
         dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
