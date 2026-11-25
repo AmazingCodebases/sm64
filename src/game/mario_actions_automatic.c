@@ -186,9 +186,10 @@ s32 act_holding_pole(struct MarioState *m) {
 }
 
 s32 act_climbing_pole(struct MarioState *m) {
-    s32 sp24;
+    s32 sp24 = 0;
     struct Object *marioObj = m->marioObj;
-    s16 cameraAngle = m->area->camera->yaw;
+    s16 cameraAngle = 0;
+    cameraAngle = m->area->camera->yaw;
 
 #ifndef VERSION_JP
     if (m->health < 0x100) {
@@ -300,9 +301,9 @@ s32 perform_hanging_step(struct MarioState *m, Vec3f nextPos) {
     UNUSED u8 filler[4];
     struct Surface *ceil;
     struct Surface *floor;
-    f32 ceilHeight;
-    f32 floorHeight;
-    f32 ceilOffset;
+    f32 ceilHeight = 0;
+    f32 floorHeight = 0;
+    f32 ceilOffset = 0;
 
     m->wall = resolve_and_return_wall_collisions(nextPos, 50.0f, 50.0f);
     floorHeight = find_floor(nextPos[0], nextPos[1], nextPos[2], &floor);
@@ -341,9 +342,10 @@ s32 perform_hanging_step(struct MarioState *m, Vec3f nextPos) {
 }
 
 s32 update_hang_moving(struct MarioState *m) {
-    s32 stepResult;
+    s32 stepResult = 0;
     Vec3f nextPos;
-    f32 maxSpeed = 4.0f;
+    f32 maxSpeed = 0;
+    maxSpeed = 4.0f;
 
     m->forwardVel += 1.0f;
     if (m->forwardVel > maxSpeed) {
@@ -488,7 +490,7 @@ s32 act_hang_moving(struct MarioState *m) {
 }
 
 s32 let_go_of_ledge(struct MarioState *m) {
-    f32 floorHeight;
+    f32 floorHeight = 0;
     struct Surface *floor;
 
     m->vel[1] = 0.0f;
@@ -514,7 +516,7 @@ void climb_up_ledge(struct MarioState *m) {
 }
 
 void update_ledge_climb_camera(struct MarioState *m) {
-    f32 sp4;
+    f32 sp4 = 0;
 
     if (m->actionTimer < 14) {
         sp4 = m->actionTimer;
@@ -541,9 +543,11 @@ void update_ledge_climb(struct MarioState *m, s32 animation, u32 endAction) {
 }
 
 s32 act_ledge_grab(struct MarioState *m) {
-    f32 heightAboveFloor;
-    s16 intendedDYaw = m->intendedYaw - m->faceAngle[1];
-    s32 hasSpaceForMario = (m->ceilHeight - m->floorHeight >= 160.0f);
+    f32 heightAboveFloor = 0;
+    s16 intendedDYaw = 0;
+    s32 hasSpaceForMario = 0;
+    intendeDYaw = m->intendedYaw - m->faceAngle[1];
+    hasSpaceForMario = (m->ceilHeight - m->floorHeight >= 160.0f);
 
     if (m->actionTimer < 10) {
         m->actionTimer++;
@@ -655,7 +659,8 @@ s32 act_ledge_climb_fast(struct MarioState *m) {
 
 s32 act_grabbed(struct MarioState *m) {
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_UNK2) {
-        s32 thrown = (m->marioObj->oInteractStatus & INT_STATUS_MARIO_UNK6) == 0;
+        s32 thrown = 0;
+        thrown = (m->marioObj->oInteractStatus & INT_STATUS_MARIO_UNK6) == 0;
 
         m->faceAngle[1] = m->usedObj->oMoveAngleYaw;
         vec3f_copy(m->pos, m->marioObj->header.gfx.pos);
