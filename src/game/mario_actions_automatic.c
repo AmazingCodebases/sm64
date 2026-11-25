@@ -59,9 +59,9 @@ s32 set_pole_position(struct MarioState *m, f32 offsetY) {
     UNUSED u8 filler[12];
     struct Surface *floor;
     struct Surface *ceil;
-    f32 floorHeight;
-    f32 ceilHeight;
-    s32 collided;
+    f32 floorHeight = 0;
+    f32 ceilHeight = 0;
+    s32 collided = 0;
     s32 result = POLE_NONE;
     f32 poleTop = m->usedObj->hitboxHeight - 100.0f;
     struct Object *marioObj = m->marioObj;
